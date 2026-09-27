@@ -1,6 +1,6 @@
 import pytest
 
-from app.application.use_cases.create_task import CreateTask
+from app.application.use_cases.tasks.create_task import CreateTask
 from app.domain.task import Task
 from app.infrastructure.repositories.in_memory_task_repository import (
     InMemoryTaskRepository,
