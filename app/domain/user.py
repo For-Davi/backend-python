@@ -9,7 +9,7 @@ class User:
     password_hash: str
 
     def __post_init__(self) -> None:
-        self.email = self.email.strip().lower()
+        self.email = self.normalize_email(self.email)
 
         if not self.name.strip():
             raise ValueError("User name cannot be empty")
@@ -19,3 +19,8 @@ class User:
 
         if not self.password_hash:
             raise ValueError("User password hash cannot be empty")
+
+    @staticmethod
+    def normalize_email(email: str) -> str:
+        return email.strip().lower()
+
