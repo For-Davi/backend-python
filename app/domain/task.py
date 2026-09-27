@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from app.domain.exceptions import TaskAlreadyCompletedError
 
 @dataclass
 class Task:
@@ -16,7 +17,11 @@ class Task:
         self.description = description
 
     def complete(self) -> None:
+        if self.completed:
+            raise TaskAlreadyCompletedError(self.id)
+
         self.completed = True
+
 
     def reopen(self) -> None:
         self.completed = False

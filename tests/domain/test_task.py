@@ -1,5 +1,6 @@
 import pytest
 
+from app.domain.exceptions import TaskAlreadyCompletedError
 from app.domain.task import Task
 
 
@@ -40,3 +41,15 @@ def test_task_update_cannot_set_empty_title():
         task.update(title="   ")
 
     assert task.title == "Estudar Python"
+
+
+
+def test_task_cannot_be_completed_twice():
+    task = Task(id=1, title="Estudar Python")
+    task.complete()
+
+    with pytest.raises(TaskAlreadyCompletedError):
+        task.complete()
+
+    assert task.completed is True
+
