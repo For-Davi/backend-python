@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class Task:
     id: int
@@ -9,11 +8,20 @@ class Task:
     completed: bool = False
 
     def __post_init__(self) -> None:
-        if not self.title.strip():
-            raise ValueError("Task title cannot be empty")
+        self._validate_title(self.title)
+
+    def update(self, title: str, description: str | None = None) -> None:
+        self._validate_title(title)
+        self.title = title
+        self.description = description
 
     def complete(self) -> None:
         self.completed = True
 
     def reopen(self) -> None:
         self.completed = False
+
+    @staticmethod
+    def _validate_title(title: str) -> None:
+        if not title.strip():
+            raise ValueError("Task title cannot be empty")
